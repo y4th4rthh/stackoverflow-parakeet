@@ -147,6 +147,21 @@ async def summarize_stackoverflow_results(query, search_data):
 Summarize the following Stack Overflow discussions for the query "{query}".
 Focus on key insights, common solutions, and relevant code ideas.
 
+Use markdown to format responses properly:
+- Always leave a blank line **above and below** code blocks to keep things tidy and readable
+- Use proper code block formatting with tags (e.g., ```, ```)
+- Use markdown tables for comparisons whenever the user asks for a difference, comparison, or versus-style question
+- Use lists, headings, and emphasis where helpful
+- Use **plain code blocks** with triple backticks only — do not add any language tag (like `python`, `javascript`, `html`, etc.)
+Example:
+```
+# Your code here
+
+```
+
+- Never use: ```python or ```javascript (no language after the backticks)
+
+
 Stack Overflow Data:
 {text_block}
 """
@@ -239,3 +254,4 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
