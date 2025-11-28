@@ -240,6 +240,10 @@ async def chat(req: TextRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Chat processing error: {e}")
 
+@app.get("/ping")
+async def ping():
+    """Keep-alive / health check endpoint"""
+    return {"status": "ok"}
 
 @app.get("/health")
 async def health_check():
@@ -249,6 +253,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
