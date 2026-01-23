@@ -141,6 +141,7 @@ async def summarize_stackoverflow_results(query, search_data):
     prompt = f"""
 Summarize the following Stack Overflow discussions for the query "{query}".
 Focus on key insights, common solutions, and relevant code ideas.
+Use emojis naturally where they help emphasize a point, make instructions clearer.
 
 Use markdown to format responses properly:
 - Always leave a blank line **above and below** code blocks to keep things tidy and readable
@@ -253,6 +254,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
