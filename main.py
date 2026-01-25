@@ -179,8 +179,8 @@ async def stackoverflow_ai_answer(query):
     search_data = await stackoverflow_search(query)
     summary = await summarize_stackoverflow_results(query, search_data)
 
-    formatted_urls = "\n".join([d["link"] for d in search_data]) if search_data else "No links found."
-    return f"🧠 **Stack Overflow Summary:**\n\n{summary}\n\n\n\n🔗 **Sources:**\n{formatted_urls}"
+    formatted_urls = "\n\n".join([d["link"] for d in search_data]) if search_data else "No links found."
+    return f"🧠 **Stack Overflow Summary:**\n\n{summary}\n\n\n\n🔗 **Sources:**\n\n{formatted_urls}"
 
 
 # -------------------------------
@@ -255,6 +255,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
