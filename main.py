@@ -239,7 +239,8 @@ async def chat(req: TextRequest):
         return {"text": ai_response, "session_id": session_id}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Chat processing error: {e}")
+        return {"text": "Your daily quota has expired. Please switch to another model or try later :(", "session_id": session_id}
+        # raise HTTPException(status_code=500, detail=f"Chat processing error: {e}")
 
 @app.get("/ping")
 async def ping():
@@ -254,6 +255,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
