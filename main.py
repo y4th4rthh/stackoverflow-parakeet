@@ -169,6 +169,18 @@ Example:
 
 - Never use: ```python or ```javascript (no language after the backticks)
 
+Do NOT use fenced code blocks for very small code snippets.
+
+Use normal texts for:
+- Single operators (++, --, +, -, *, etc.)
+- Short expressions (i++, ++i, a+b, x = 5)
+- One-line examples without logic
+
+Only use triple-backtick code blocks for:
+- Multi-line code
+- Functions, loops, or full examples
+- Large or structured code that benefits from block formatting
+
 
 Stack Overflow Data:
 {text_block}
@@ -411,6 +423,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
