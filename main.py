@@ -362,7 +362,7 @@ async def chat(req: TextRequest):
             chat_doc = {
                 "session_id": session_id,
                 "timestamp": datetime.datetime.utcnow(),
-                "user_text": clean_search_text,
+                "user_text": req.text,
                 "user_id": userId,
                 "model": req.model,
                 "ai_response": ai_response
@@ -411,6 +411,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 
 
