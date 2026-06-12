@@ -5,8 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
+from google.generativeai import configure, GenerativeModel
 from typing import Optional
 from gtts import gTTS
 import speech_recognition as sr
@@ -69,8 +68,10 @@ MODEL_CONFIG = {
     },
 }
 
+# Configure Gemini
+configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-client = genai.Client()
+
 # -------------------------------
 # STEP 1: CLASSIFY QUERY
 # -------------------------------
@@ -89,13 +90,11 @@ Answer only with one word:
 - GENERAL → for anything else.
 """
     try:
-        response = client.models.generate_content(
-    model="gemini-3.5-flash",
-    contents=prompt,
-    config=types.GenerateContentConfig(
-        system_instruction="You are a classifier that determines if a query is technical or not.",
-    ),
-)
+        model = GenerativeModel(
+            model_name="gemini-2.5-flash",
+            system_instruction="You are a classifier that determines if a query is technical or not.",
+        )
+        response = model.generate_content(prompt)
         answer = response.text.strip().upper()
         return "TECHNICAL" if "TECHNICAL" in answer else "GENERAL"
     except Exception as e:
@@ -188,14 +187,11 @@ Stack Overflow Data:
 """
 
     try:
-        response = client.models.generate_content(
-             model="gemini-3.5-flash",
-             contents=prompt,
-             config=types.GenerateContentConfig(
-                system_instruction="You are a helpful AI that summarizes Stack Overflow discussions into concise technical insights.",
-          ),
+        model = GenerativeModel(
+            model_name="gemini-2.5-flash",
+            system_instruction="You are a helpful AI that summarizes Stack Overflow discussions into concise technical insights."
         )
-       
+        response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         print(f"❌ Gemini summarization error: {e}")
@@ -366,14 +362,11 @@ async def chat(req: TextRequest):
             else:
                 sysPrompt = SYSTEM_PROMPT
 
-            response = client.models.generate_content(
-             model="gemini-3.5-flash",
-             contents=req.text,
-             config=types.GenerateContentConfig(
-                system_instruction=sysPrompt,
-              ),
+            model = GenerativeModel(
+                model_name="gemini-2.5-flash",
+                system_instruction=sysPrompt
             )
-
+            response = model.generate_content(req.text)
             ai_response = response.text
 
         # Save chat if not incognito
@@ -430,7 +423,6 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
 
 
 
