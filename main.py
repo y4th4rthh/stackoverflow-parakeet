@@ -54,14 +54,14 @@ class TextRequest(BaseModel):
 MODEL_CONFIG = {
     "neura.essence1.o": {
         "provider": "gemini",
-        "model_name": "gemini-2.5-flash",
+        "model_name": "gemini-3.5-flash",
         "tts_speed": False,
         "max_tokens": 1000,
         "temperature": 0.7,
     },
     "neura.swift1.o": {
         "provider": "gemini",
-        "model_name": "gemini-2.5-flash",
+        "model_name": "gemini-3.5-flash",
         "tts_speed": False,
         "max_tokens": 1000,
         "temperature": 0.7,
@@ -91,7 +91,7 @@ Answer only with one word:
 """
     try:
         model = GenerativeModel(
-            model_name="gemini-2.5-flash",
+            model_name="gemini-3.5-flash",
             system_instruction="You are a classifier that determines if a query is technical or not.",
         )
         response = model.generate_content(prompt)
@@ -188,7 +188,7 @@ Stack Overflow Data:
 
     try:
         model = GenerativeModel(
-            model_name="gemini-2.5-flash",
+            model_name="gemini-3.5-flash",
             system_instruction="You are a helpful AI that summarizes Stack Overflow discussions into concise technical insights."
         )
         response = model.generate_content(prompt)
@@ -363,7 +363,7 @@ async def chat(req: TextRequest):
                 sysPrompt = SYSTEM_PROMPT
 
             model = GenerativeModel(
-                model_name="gemini-2.5-flash",
+                model_name="gemini-3.5-flash",
                 system_instruction=sysPrompt
             )
             response = model.generate_content(req.text)
